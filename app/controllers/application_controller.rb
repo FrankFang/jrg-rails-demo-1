@@ -1,14 +1,14 @@
 class ApplicationController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
   def render_404
-    head 404
+    head :not_found
   end
 
   def render_resource(resource)
     if resource.valid?
-      render json: {resource: resource}, status: 200
+      render json: {resource: resource}, status: :ok
     else
-      render json: {errors: resource.errors}, status: 400
+      render json: {errors: resource.errors}, status: :unprocessable_entity
     end
   end
 end

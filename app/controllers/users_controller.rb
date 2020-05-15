@@ -15,10 +15,11 @@ class UsersController < ApplicationController
   end
 
   def update
-    user.update(nickname: params[:nickname])
+    user.update update_params
     render_resource user
   end
 
+  private
 
   def find_user
     @user = User.find params[:id]
@@ -26,11 +27,15 @@ class UsersController < ApplicationController
 
   def destroy
     User.destroy params[:id]
-    head 200
+    head :ok
   end
 
   def create_params
     params.permit(:username, :password, :password_confirmation)
+  end
+
+  def update_params
+    params.permit :nickname
   end
 
 end
